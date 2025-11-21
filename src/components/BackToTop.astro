@@ -1,0 +1,136 @@
+---
+import { Icon } from 'astro-pure/user'
+
+const { header: headerName, content: contentName, needPercent = true } = Astro.props
+---
+
+<div
+  class='z-10 group fixed bottom-8 end-4 transition-all flex flex-col gap-y-4 sm:end-8'
+  id='action-buttons'
+>
+  <slot name='other-icons' />
+  <button
+    aria-label='Back to Top'
+    class='relative size-10 flex items-center justify-center rounded-full border-2 border-transparent bg-muted text-muted-foreground duration-300 hover:border-border/75 sm:size-12 opacity-0'
+    id='to-top-btn'
+  >
+    <div
+      class='top-text absolute inset-0 flex items-center justify-center group-[.ended]:opacity-0'
+    >
+      <span class='text'>0</span>
+      <span class='text-xs'>%</span>
+    </div>
+    <Icon name='up' class='top-icon group-[.ended]:opacity-100' />
+  </button>
+</div>
+
+<script is:inline define:vars={{ headerName, contentName, needPercent }}>
+  const actionBtns = document.getElementById('action-buttons')
+  const scrollBtn = document.getElementById('to-top-btn')
+  const scrollPercentEl = scrollBtn.querySelector('.top-text .text') // More robust selector
+  const targetHeader = document.getElementById(headerName)
+  const articleElement = document.getElementById(contentName)
+
+  if (!articleElement) {
+    console.error(`Element with ID ${contentName} not found.`)
+    // Optional: disable percentage functionality if article element is missing
+    needPercent = false
+  }
+
+  // Scroll to top
+  function callback(entries) {
+    entries.forEach((entry) => {
+      actionBtns.classList.toggle('show', !entry.isIntersecting)
+    })
+  }
+
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ behavior: 'smooth', top: 0 })
+  })
+
+  if (targetHeader) {
+    const observer = new IntersectionObserver(callback)
+    observer.observe(targetHeader)
+  } else {
+    console.error(`Element with ID ${headerName} not found.`)
+  }
+
+  if (needPercent && articleElement) {
+    // Cache static layout values (assuming content does not change dynamically)
+    const scrollHeight = articleElement.scrollHeight
+    const articleTop = articleElement.offsetTop
+    const clientHeight = document.documentElement.clientHeight
+
+    function calculateScrollPercent() {
+      const scrollTop = Math.max(0, window.scrollY || document.documentElement.scrollTop)
+      
+      // If user hasn't scrolled past the article's top, progress is 0%
+      if (scrollTop < articleTop) return 0
+
+      const maxScrollable = scrollHeight - clientHeight
+      // If article height <= viewport height, treat as fully scrolled (100%)
+      if (maxScrollable <= 0) return 100
+
+      // Compute effective scroll distance and clamp it to maxScrollable
+      const progress = Math.min(scrollTop - articleTop, maxScrollable)
+      return Math.round((progress / maxScrollable) * 100)
+    }
+
+    let ticking = false
+    function updateScrollPercent() {
+      const percent = calculateScrollPercent()
+      scrollPercentEl.textContent = percent.toString()
+      actionBtns.classList.toggle('ended', percent >= 100)
+      ticking = false
+    }
+
+    // Throttle scroll handler using requestAnimationFrame for better performance
+    document.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScrollPercent)
+        ticking = true
+      }
+    })
+
+    // Initialize state in case the page loads mid-scroll
+    updateScrollPercent()
+  } else {
+    actionBtns.classList.add('ended')
+  }
+</script>
+
+<style>
+  #action-buttons {
+    transform: translateY(4rem);
+    transition: transform 0.3s ease;
+  }
+  #action-buttons.show {
+    transform: translateY(0);
+  }
+  #action-buttons.show #to-top-btn {
+    opacity: 1;
+  }
+
+  /* To top button status change */
+  #to-top-btn .top-text,
+  #to-top-btn .top-icon {
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+  #to-top-btn .top-text {
+    opacity: 1;
+  }
+  #to-top-btn .top-icon {
+    opacity: 0;
+  }
+
+  #action-buttons.ended #to-top-btn .top-text,
+  #to-top-btn:hover .top-text {
+    opacity: 0;
+  }
+  #action-buttons.ended #to-top-btn .top-icon,
+  #to-top-btn:hover .top-icon {
+    opacity: 1;
+  }
+</style>
