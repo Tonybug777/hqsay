@@ -1,229 +1,209 @@
 ---
-import { Button, Collapse, Spoiler, Timeline } from 'astro-pure/user'
+import { Collapse, Spoiler, Timeline, Icon } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
-import Substats from '@/components/about/Substats.astro'
-import ToolSection from '@/components/about/ToolSection.astro'
+import SubstatsLocal from '@/components/about/SubstatsLocal.astro'
+import { Image } from 'astro:assets'
+import NaviCard from '@/components/NaviCard.astro'
+import Mbti from '@/assets/about/intp-logician-s3-male.svg'
+import  QQ_qrcode  from '@/assets/about/qrcode-QQ.png'
+import Wechat_qrcode from '@/assets/about/qrcode-Wechat.png'
+import Jiuyin from '@/assets/about/Jiuyin.jpg'
+import Jayce from '@/assets/about/Jayce.jpg'
+import Unturned from '@/assets/about/Unturned.jpg'
+import Yuri from '@/assets/about/Yuri.jpg'
 
 const headings = [
-  { depth: 2, slug: 'hobbies', text: 'Hobbies' },
-  { depth: 2, slug: 'tools', text: 'Tools' },
-  { depth: 2, slug: 'social-networks', text: 'Social Networks' },
-  { depth: 2, slug: 'gossips', text: 'Gossips' },
-  { depth: 2, slug: 'about-blog', text: 'About Blog' }
+  { depth: 2, slug: 'information', text: '基本信息 / Infos' },
+  { depth: 2, slug: 'hobbies', text: '爱好 / Hobbies' },
+  { depth: 2, slug: 'find-me', text: '联络 / Contact' },
+  { depth: 2, slug: 'media', text: '动态 / Media' },
+  { depth: 2, slug: 'entertainment', text: '消遣 / Entertainment' },
+  { depth: 2, slug: 'gossips', text: '流言 / Gossips' },
+  { depth: 2, slug: 'about-blog', text: '关于本站 / About-Blog' }
 ]
----
+const events = [
+  {date:"2025.9-", content: "出门看看 Exploring the world"},
+  {date:"2024.4-2025.7", content: "尝试世俗要饭方案——失败 Failed to get an acceptable job"},
+  {date:"2023.10-2024.2", content: "在三亚某省级海洋实验室要饭 Worked at an oceanographic lab in Sanya"},
+  {date:"2020.8-2023.6", content: "在中国海洋大学海洋技术专业摸鱼 M.Sc. in Marine Technology, OUC"},
+  {date:"2016.8-2020.6", content: "在中国海洋大学通信工程专业水课 B.Eng. in Communication Engineering, OUC"},
+  {date:"2013.8-2016.6", content: "在沂源县第一中学坐牢 Studied at YiYuan No.1 High School"},
+  {date:"2000.8-2013.6", content: "初具人形 Childhood"},
+  {date:"1997.11", content: "出生于山东省沂源县鲁村镇 Borned in Lucun Town, YiYuan County, Shandong Province"}
+]
 
-<PageLayout title='About' {headings} comment>
-  <p>Developer / Designer</p>
-  <p>
-    Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum
-    dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel, at eum oratio
-    possit voluptatum.
-  </p>
-  <p>
-    Motto: Stay hungry, Stay foolish. <Spoiler>这里可以夹私货，比如为什么要演奏春日影！</Spoiler>
-  </p>
-  <Button title='Sponsor Me' class='w-fit' href='/projects#sponsorship' variant='ahead' />
-
-  {/* general-talk */}
-  <h2 id='hobbies'>Hobbies</h2>
-  <ul>
-    <li>Lorem ipsum dolor sit amet, vidit suscipit at mei.</li>
-    <li>
-      Quem denique mea id. Usu ei regione indoctum dissentiunt, cu meliore fuisset mei, vel quod
-      voluptua ne.
-    </li>
-    <li>Ex dicat impedit mel, at eum oratio possit voluptatum.</li>
-    <li>Impetus fuisset ullamcorper pri cu, his posse iisque ad, aliquam honestatis usu id.</li>
-  </ul>
-
-  {/* tools */}
-  <h2 id='tools'>Tools</h2>
-  <p>Current support tools as follow:</p>
-  <ToolSection
-    class='mb-5'
-    title='Design'
-    tools={[
-      {
-        name: 'Photoshop',
-        description: 'Picture Editing',
-        href: 'https://www.adobe.com/products/photoshop',
-        icon: import('@/assets/tools/photoshop.svg?raw')
-      },
-      {
-        name: 'Illustrator',
-        description: 'Vector Drawing',
-        href: 'https://www.adobe.com/products/illustrator',
-        icon: import('@/assets/tools/illustrator.svg?raw')
-      },
-      {
-        name: 'After Effects',
-        description: 'Motion Graphics',
-        href: 'https://www.adobe.com/products/aftereffects',
-        icon: import('@/assets/tools/aftereffects.svg?raw')
-      },
-      {
-        name: 'Premiere Pro',
-        description: 'Video Editing',
-        href: 'https://www.adobe.com/products/premiere',
-        icon: import('@/assets/tools/premiere.svg?raw')
-      }
-    ]}
-  />
-  <ToolSection
-    class='mb-5'
-    title='Productivity'
-    tools={[
-      {
-        name: 'Chrome',
-        description: 'Browser',
-        href: 'https://www.google.com/chrome/',
-        icon: import('@/assets/tools/chrome.svg?raw')
-      },
-      {
-        name: 'Firefox',
-        description: 'Browser',
-        href: 'https://www.mozilla.org/en-US/firefox',
-        icon: import('@/assets/tools/firefox.svg?raw')
-      },
-      {
-        name: 'Notion',
-        description: 'Note Taking',
-        href: 'https://www.notion.so/',
-        icon: import('@/assets/tools/notion.svg?raw')
-      },
-      {
-        name: 'Typora',
-        description: 'Markdown Editor',
-        href: 'https://typora.io/',
-        icon: import('@/assets/tools/typora.svg?raw')
-      }
-    ]}
-  />
-  <ToolSection
-    class='mb-5'
-    title='Development'
-    tools={[
-      {
-        name: 'VS Code',
-        description: 'IDE',
-        href: 'https://code.visualstudio.com/',
-        icon: import('@/assets/tools/vscode.svg?raw')
-      },
-      {
-        name: 'Neovim',
-        description: 'IDE',
-        href: 'https://neovim.io/',
-        icon: import('@/assets/tools/neovim.svg?raw')
-      },
-      {
-        name: 'Sublime Text',
-        description: 'IDE',
-        href: 'https://www.sublimetext.com/',
-        icon: import('@/assets/tools/sublime.svg?raw')
-      }
-    ]}
-  />
-  <ToolSection
-    class='mb-5'
-    title='Environment'
-    tools={[
-      {
-        name: 'Arch Linux',
-        description: 'Linux Distribution',
-        href: 'https://archlinux.org/',
-        icon: import('@/assets/tools/archlinux.svg?raw')
-      },
-      {
-        name: 'Ubuntu 24.04 LTS',
-        description: 'Linux Distribution',
-        href: 'https://ubuntu.com/',
-        icon: import('@/assets/tools/ubuntu.svg?raw')
-      },
-      {
-        name: 'MacOS Tahoe',
-        description: 'MacBook Air',
-        href: 'https://www.apple.com/macos/',
-        icon: import('@/assets/tools/apple.svg?raw')
-      },
-      {
-        name: 'Windows 11',
-        description: 'Framework Laptop 16',
-        href: 'https://news.microsoft.com/windows11-general-availability/',
-        icon: import('@/assets/tools/windows11.svg?raw')
-      }
-    ]}
-  />
-
-  {/* social-networks */}
-  <h2 id='social-networks'>Social Networks</h2>
-  <p>
-    Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum
-    dissentiunt, cu meliore fuisset mei, vel quod voluptua ne.
-  </p>
-  <Substats
-    stats={[
-      {
-        platform: 'GitHub',
-        icon: 'github',
-        link: 'https://github.com/cworld1',
-        text: 'followers',
-        api: 'github/cworld1'
-      },
-      {
-        platform: 'Telegram',
-        icon: 'telegram',
-        color: '#2ca5e0',
-        link: 'https://t.me/cworld0_cn',
-        text: 'subscribers',
-        api: 'telegram/cworld0_cn'
+const stats = [
+  {
+        platform: 'Zhihu',
+        icon: 'zhihu',
+        color: '#50769d',
+        link: 'https://www.zhihu.com/people/tonybug777/answers',
+        text: '回答',
+        count: 5
       },
       {
         platform: 'Steam',
         icon: 'steam',
         color: '#50769d',
-        link: 'https://steamcommunity.com/id/cworld',
-        text: 'games',
-        api: 'steamgames/76561199021278120'
+        link: 'https://steamcommunity.com/id/hancheu_jc',
+        text: '游戏',
+        count: 8
+      },
+      {
+        platform: '微博',
+        icon: 'weibo',
+        color: '#e71f19',
+        link: 'https://weibo.com/u/5255691439',
+        text: '原创微博',
+        count: 26
+      },
+      {
+        platform: '小红书',
+        icon: 'xiaohongshu',
+        link: 'https://www.xiaohongshu.com/user/profile/63f3550a000000000f012ed6',
+        text: '笔记',
+        count: 1
+      },
+      {
+        platform: 'Bilibili',
+        icon: 'bilibili',
+        color: '#fe7398',
+        link: 'https://space.bilibili.com/165452812/favlist?fid=130705712&ftype=create',
+        text: '收藏夹',
+        count: 9
       }
-    ]}
+]
+const entertainment = [
+  {
+    href: 'https://9yin.woniu.com/main.html',
+    heading: '九阴真经',
+    subheading: '江湖七区·醉江湖',
+    image: Jiuyin,
+  },
+    {
+    heading: '红色警戒·尤里的复仇',
+    subheading: 'Be one with Yuri.',
+    image: Yuri,
+  },
+    {
+    href:'https://store.steampowered.com/app/304930/Unturned/',
+    heading:'Unturned',
+    subheading:`You're a survivor in the zombie infested ruins of society, and must work with your friends and forge alliances to remain among the living.`,
+    image:Unturned,
+  },
+  {
+    href:'https://lol.qq.com/',
+    heading:'英雄联盟',
+    subheading:'网通·德玛西亚',
+    image:Jayce,
+  }
+]
+---
+
+<PageLayout title='About' {headings} comment>
+  <b>Explorer / Struggler (against failure) </b>
+  <p>
+    涵秋正在尝试制作一些奇妙道具，或者在钻研将地球发射到M78星云的办法，请给他一些时间…… 噢，也可能在去码头搞薯条的路上。<br/>
+    Hancheu is either busy crafting some wondrous gadgets or figuring out how to launch Earth all the way to the M78 Nebula—so please give him a moment… Oh! Or maybe he's just off to the pier to snag some fries.
+  </p>
+  <p>
+    <b>座右铭：</b>去码头整点薯条。<br/><b>Motto: </b>Go get some fries on the pier.<br /><Spoiler>I really like a saying that Steve Jobs said: <i>The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it.</i></Spoiler>
+  </p>
+  {/* Information */}
+  <h2 id='information'>基本信息 / Infos </h2>
+  <h3>人生小事件 / Minor Episodes in Life</h3>
+  <Timeline events={events} class="font-bold"/>
+  {/* Mbti */}
+  <h3>Mbti</h3>
+<div class="grid grid-cols-2">
+<a href="https://www.16personalities.com/ch/intp-人格" target="_blank" class="decoration-none">
+<div class="border-1 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-violet">
+    <figure>
+      <Image
+    src={Mbti}
+    alt="Mbti: INTP-A Logician"
+    loading="lazy"
+    width={300}
+    height={300}
   />
+    <figcaption class="text-center font-bold text-lg text-purple-9 dark:text-purple-5">INTP-A Logician</figcaption>
+  </figure>
+  </div>
+  </a>
+<p class="inline-block m-4 text-2xl font-500">
+  人类的脚步应当是无限的，何必被一个标签束缚呢？<br/>Human potential is boundless; no label should confine the self.
+</p>
+</div>
+
+  {/* Hobbies */}
+  <h2 id='hobbies'>爱好 / Hobbies</h2>
+  <ul>
+    <li><b>观察人类</b>。趁下雨天，在路边的长椅上静静地坐着，观察对面餐馆中人们的神态和行为。<Spoiler>每个人脸上都写满了故事（确信）。</Spoiler></li>
+    <li><b>看书</b>。人类走出非洲已经是几万年前的事了，这一路发生了很多，我们仍然能从书中发现些什么。<Spoiler>好消息，人类还没有走出太阳系！</Spoiler></li>
+    <li><b>做饭</b>。当我拿起锅铲的时候你最好站远点，因为我的锅铲没有后视镜。<Spoiler>可惜目前还不能靠光合作用生存😔</Spoiler></li>
+    <li><b>摆弄新奇事物</b>。要让夏花开在冬季，让荔枝长在北方，让山川不再遥远……，这都离不开科学的甜美气息。<Spoiler>I have a dream (too)…</Spoiler></li>
+  </ul>
+
+  {/* contact */}
+<h2 id='find-me'>联络 / Contact</h2>
+<p>涵秋可能会随机刷新在某些地方（现实世界和赛博空间），也许你可以试着从QQ或者微信上联系他……<br/>
+  Hancheu respawns at random times and locations—both IRL and online, maybe try messaging him on QQ or WeChat…
+</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center my-4">
+  <div class='relative justify-center overflow-hidden rounded-xl border bg-white'>
+    <Image
+    src={QQ_qrcode}
+    alt="Hancheu's QQ QR Code"
+    loading="lazy"
+    class="mx-auto my-0 max-w-50 max-h-50"
+  />
+  </div>
+  <div class='relative justify-center overflow-hidden rounded-xl border bg-white'>
+    <Image
+    src={Wechat_qrcode}
+    alt="Hancheu's Wechat QR Code"
+    loading="lazy"
+    class="mx-auto my-0 max-w-50 max-h-50"
+  />
+  </div>
+</div>
+  
+  {/* social-networks */}
+  <h2 id='media'>动态 / Media</h2>
+  <p>
+    这里也有一些其他线索……<br/>
+    There are some other clues as well...
+  </p>
+  <SubstatsLocal stats={stats} />
+
+  {/* Entertainment */}
+  <h2 id='entertainment'>消遣 / Entertainment</h2>
+  <div class='grid grid-cols-1 gap-3 sm:grid-cols-2'>
+    {
+      entertainment.map(item => (
+       <NaviCard {...item} />
+      ))
+    }
+  </div>
 
   {/* gossips */}
-  <h2 id='gossips'>Gossips</h2>
-  <Collapse title='Lorem ipsum'>
-    Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum
-    dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel, at eum oratio
-    possit voluptatum.
+  <h2 id='gossips'>流言 / Gossips</h2>
+  <Collapse title='为什么叫涵秋？'>
+    <p>唐代诗人杜牧外放池州时，好哥们儿张祜去拜访他，二人相约重阳同登池州城外的齐山。
+      山水好景，哥俩却同是失意人，杜牧有感而发，写下<b>《九日齐山登高》</b>一诗，寥寥数语，道尽人世无常，却又不失洒脱。
+      我选其首句“<b>江涵秋影雁初飞</b>”，择“<b>涵秋</b>”二字，取上善若水、虚怀若谷之意。</p>
   </Collapse>
-
+  <Collapse title='头像的猫猫怎么说？'>
+    <p>想用一个平平淡淡的疯感的卡通头像，由于自己画不好，所以遍寻赛博世界，还终于让我在<a href="https://www.xiaohongshu.com/user/profile/64e584400000000001012847" target="_blank" class="decoration-none text-red"><b> 猫了么 </b></a>老师的作品里找到了。</p>
+  </Collapse>
   {/* about-blog */}
-  <h2 id='about-blog'>About Blog</h2>
-  <p>Website history:</p>
-  <Timeline
-    events={[
-      {
-        date: '2024-04-29',
-        content:
-          'Website refactored using <a href="https://astro.build/" target="_blank">Astro</a> and <a href="https://github.com/srleom/astro-theme-resume" target="_blank">Astro Theme Resume</a>'
-      },
-      {
-        date: '2024-07-26',
-        content:
-          'Website abstracted as a theme and published on <a href="https://github.com/cworld1/astro-theme-pure"target="_blank">Github</a>'
-      },
-      {
-        date: '2024-07-27',
-        content: 'Began writing website docs'
-      }
-    ]}
-  />
+  <h2 id='about-blog'>关于本站 / About-Blog</h2>
   <p>
-    The smooth operation and personalized customization of website also rely on the resources and
-    technical support provided by the following excellent projects/service providers:
+    网站的顺畅运行和个性化定制同样依赖于以下优秀项目/服务提供商所提供的资源和技术支持：<br/>
+    The smooth running and personalized design of this website rely on the resources and technical support provided by the following excellent projects/service providers:
   </p>
   <ul>
-    <li>Domain: <a href='#' target='_blank'>Vercel</a></li>
+    <li>Domain: <a href='#' target='_blank'>hqsay.com</a></li>
     <li>
       Framework & Theme: <a href='https://astro.build/' target='_blank'>Astro</a> + <a
         href='https://github.com/cworld1/astro-theme-pure'
@@ -231,20 +211,10 @@ const headings = [
       >
     </li>
     <li>
-      Site hosting: <a href='https://vercel.com/' target='_blank'>Vercel</a>
+      Site hosting: <a href='https://cloudflare.com/' target='_blank'>Cloudflare Pages</a>
     </li>
-    <li>
-      CI/CD: <a href='https://vercel.com/workflow' target='_blank'>Vercel Workflow</a>
-    </li>
-    <li>Comment system: <a href='https://waline.js.org' target='_blank'>Waline</a></li>
-    <li>
-      Visits: <a href='https://supabase.com/' target='_blank'>Supabase</a> +
-      <a href='https://waline.js.org/' target='_blank'>Waline</a>
-    </li>
-    <li>
-      Other statistics: <a href='https://github.com/spencerwooo/substats' target='_blank'
-        >Substats</a
-      >
+    <li>Comment system: <a href='https://waline.js.org' target='_blank'>Waline</a> + 
+      <a href='https://vercel.com/' target='_blank'>Vercel</a>
     </li>
   </ul>
 </PageLayout>

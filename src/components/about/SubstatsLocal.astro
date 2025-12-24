@@ -1,0 +1,42 @@
+---
+import { socialLinks, type iconsType } from 'astro-pure/types'
+import { Icon } from 'astro-pure/user'
+
+interface SubstatsItem {
+  platform: string
+  /** 可选：使用 astro-pure 内置图标（仅当 customIcon 未提供时生效） */
+  icon: (typeof socialLinks)[number]
+  color?: string
+  link?: string
+  text: string
+  count: number | string // 必填，由用户自己维护
+}
+
+const { stats } = Astro.props as { stats: SubstatsItem[] }
+// 注意：已完全移除所有 fetch / async 逻辑
+---
+
+<div class='grid grid-cols-1 gap-3 rounded-xl border p-2 sm:grid-cols-2 sm:p-3'>
+  {
+    stats.map(({ link, platform, icon, color, count, text }) => (
+      <a
+        class='group text-muted-foreground no-underline'
+        href={link}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <div class='flex items-center gap-3 rounded-lg border border-transparent px-3 py-2 transition-all hover:border-border hover:bg-muted'>
+          <Icon name={icon as iconsType} color={color} />
+          <div class='flex-1 text-foreground transition-colors group-hover:text-primary'>
+            {platform}
+          </div>
+
+          <div class='flex items-center gap-1.5'>
+            <samp>{count}</samp>
+            <span class='text-sm font-normal'>{text}</span>
+          </div>
+        </div>
+      </a>
+    ))
+  }
+</div>

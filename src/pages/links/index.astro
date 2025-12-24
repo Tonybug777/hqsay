@@ -14,11 +14,11 @@ const headings = [
 
 const { friends } = links
 const linksConf = config.integ.links
-const linkEditPage = 'https://github.com/cworld1/astro-theme-pure/blob/main/public/links.json'
+const linkEditPage = 'https://github.com/Tonybug777/pure-theme/blob/main/public/links.json'
 ---
 
 <PageLayout title='Links' {headings} comment>
-  <p>They're sorted randomly.</p>
+  <p>当然是随机的。 They're sorted randomly.</p>
   <h2 id='common-links'>Common Links</h2>
   <FriendList list={friends[0]} />
   <Collapse title='Links with Bad Status'>
@@ -47,7 +47,6 @@ const linkEditPage = 'https://github.com/cworld1/astro-theme-pure/blob/main/publ
       })
     }
   </blockquote>
-
   <p>
     可通过下方留言或 <a href={linkEditPage} target='_blank'>提交 PR</a> 申请友链。申请说明：<br />
     Apply your link by leaving comment or <a href={linkEditPage} target='_blank'>Submitting a PR</a

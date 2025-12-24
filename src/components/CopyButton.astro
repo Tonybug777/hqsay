@@ -1,0 +1,111 @@
+---
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<div class="copy-container">
+  <code class="copy-text">{text}</code>
+
+  <button
+    class="copy-button"
+    aria-label={`Copy "${text}" to clipboard`}
+    title="Copy to clipboard"
+    onclick={`copyToClipboard(${JSON.stringify(text)}, this)`}
+  >
+    <!-- 默认复制图标 -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+  function copyToClipboard(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      // 成功：显示对勾
+      btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      setTimeout(() => {
+        // 恢复原始图标
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+      }, 2000);
+    }).catch(() => {
+      // 失败：显示警告
+      btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+      setTimeout(() => {
+        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+      }, 2000);
+    });
+  }
+</script>
+
+<style>
+.copy-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  /* 容器本身不需要 scrollbar-width */
+}
+
+.copy-text {
+  padding: 6px 10px;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  max-width: 45vw;
+  /* 🔑 关键修改开始 */
+  white-space: nowrap;
+  overflow-x: auto;      /* 启用横向滚动 */
+  overflow-y: hidden;    /* 防止垂直滚动 */
+  -ms-overflow-style: none;  /* 隐藏 IE/Edge 滚动条 */
+  scrollbar-width: none;     /* 隐藏 Firefox 滚动条 */
+  color: #333;
+}
+
+/* 隐藏 Chrome/Safari 的滚动条 */
+.copy-text::-webkit-scrollbar {
+  display: none;
+}
+
+.copy-button {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+  padding: 0;
+  margin: 0;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.copy-button:hover {
+  color: #517e94;
+  border-color: #517e94;
+}
+
+/* 暗色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .copy-text {
+    background: #2d2d2d;
+    border-color: #555;
+    color: #eee;
+  }
+  .copy-button {
+    border-color: #666;
+    color: #aaa;
+  }
+  .copy-button:hover {
+    color: #517e94;
+    border-color: #517e94;
+  }
+}
+</style>

@@ -24,7 +24,7 @@ export type CardList = {
 
 export type TimelineEvent = {
   date: string
-  content: string
+  content: HTMLElement | string
 }
 
 export type iconsType = keyof typeof Icons

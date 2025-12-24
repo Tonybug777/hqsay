@@ -4,23 +4,31 @@ import { Image } from 'astro:assets'
 import { Button, Collapse, Icon } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import ProjectSection from '@/components/projects/ProjectSection.astro'
-import Sponsors from '@/components/projects/Sponsors.astro'
+// import Sponsors from '@/components/projects/Sponsors.astro'
 import Sponsorship from '@/components/projects/Sponsorship.astro'
-import alipay from '@/assets/alipay-qrcode.jpg'
-import KeyIcon from '@/assets/icons/key.svg'
-import wechat from '@/assets/wechat-qrcode.jpg'
+import alipay from '@/assets/projects/Alipay-qrcode.jpg'
+// import KeyIcon from '@/assets/icons/key.svg'
+import wechat from '@/assets/projects/WechatPay-qrcode.png'
+import CopyButton from '@/components/CopyButton.astro'
 
 const headings = [
-  { depth: 2, slug: 'programs', text: 'Programs' },
-  { depth: 2, slug: 'learnings', text: 'Learnings' },
-  { depth: 2, slug: 'others', text: 'Others' },
-  // { depth: 2, slug: 'gpg-signature', text: 'GPG Signature' },
-  // { depth: 2, slug: 'sponsorship', text: 'Sponsorship' }
+  { depth: 2, slug: 'ideas', text: '灵光乍现 / Ideas' },
+  { depth: 2, slug: 'learnings', text: '学无止境 / Learnings' },
+  { depth: 2, slug: 'others', text: '其他 / Others' },
+  { depth: 2, slug: 'sponsorship', text: '打赏 / Sponsorship' }
 ]
+const ETH_address = '0x836A220Dac6058f3B806A054776aAE805Ba4d446'
+const SOL_address = '6b9zUZPHH1gDpUnEpVdB5799yxjvdQ8nNCC7PSuKzqxF'
+const SUI_address = '0x762cf427d091700b9b21d0325a25fed2b7b41a133523d7a0823fcaf6a4cdc27b'
 ---
 
 <PageLayout title='Projects' {headings} view>
-  <!-- <p>Github Activities:</p>
+  <p>涵秋曾有许多奇思妙想，大多只在脑海中模拟完成，但是今天(突然激昂😨)！这个拖延症晚期患者艰难地爬了起来，试图做些什么……<br />
+    Hancheu once had countless brilliant ideas—most of which never went beyond mental simulations. But today (suddenly fired up 😨)! 
+    This chronic procrastinator struggled to his feet, determined to finally do something…
+  </p>
+  {/*
+  <p>Github Activities:</p>
   <p>
     <Image
       src='https://ghchart.rshah.org/659eb9/cworld1'
@@ -35,34 +43,39 @@ const headings = [
   </p>
   <Button title='Checkout sponsorship' class='w-fit' href='#sponsorship'>
     <Icon class='size-5' name='receive-money' slot='before' />
-  </Button> -->
+  </Button>
+  */}
+  
 
-  <h2 id='programs'>Programs</h2>
+  <h2 id='ideas'>灵光乍现 / Ideas</h2>
+  {
   <ProjectSection
     projects={[
       {
-        name: '🎨 Astro Theme Pure',
-        description: 'A simple, fast and powerful blog & document theme built by Astro',
+        name: '🌏 Hyper Eras (Planning)',
+        description: 'A 3D-earth website for exploring what\'s going on in the world.',
         links: [
-          { type: 'github', href: 'https://github.com/cworld1/astro-theme-pure' },
-          { type: 'site', href: 'https://astro-pure.js.org/' },
-          { type: 'doc', href: 'https://astro-pure.js.org/docs/list' },
-          { type: 'release', href: 'https://www.npmjs.com/package/astro-pure' }
+          // { type: 'github', href: 'https://github.com/cworld1/astro-theme-pure' },
+          { type: 'site', href: 'https://app.hypereras.com/' },
+          { type: 'doc', href: 'https://docs.hypereras.com' },
+          // { type: 'release', href: 'https://www.npmjs.com/package/astro-pure' }
         ]
       },
       {
-        name: '💄 PKU Art',
-        description: 'A script to beautify pku course website',
+        name: '🧭 Aura Eras (Planning)',
+        description: 'An on-chain RPG adventure game, powered by Bevy and Sui.',
         links: [
-          { type: 'github', href: 'https://github.com/zhuozhiyongde/pku-art' },
-          { type: 'site', href: 'https://github.com/zhuozhiyongde/pku-art' },
-          { type: 'doc', href: 'https://docs.arthals.ink/docs/pku-art' }
+          { type: 'site', href: 'https://play.auraeras.com/' }
         ]
       }
     ]}
   />
+  }
+  
+
+   {/* 
   <Collapse title='Some old projects'>
-    <ProjectSection
+     <ProjectSection
       projects={[
         {
           name: '🧩 rehype-autolink-headings-simple',
@@ -84,34 +97,56 @@ const headings = [
       ]}
     />
   </Collapse>
+ */}
 
-  <h2 id='learnings'>Learnings</h2>
-  <ProjectSection
+  <h2 id='learnings'>学无止境 / Learnings</h2>
+  {
+    <ProjectSection
     class='my-2'
     projects={[
       {
-        name: 'R Learning',
-        description: 'Some notes and code about learning R language',
+        name: 'Rust Learning',
+        description: '好吧，我承认我是Rust教。',
         links: [
-          { type: 'github', href: 'https://github.com/cworld1/r-learning' },
-          { type: 'site', href: 'https://cworld1.github.io/r-learning' }
+          { type: 'site', href: 'https://rust-lang.org/' }
         ]
       },
       {
-        name: 'CS 213 Learning',
-        description: 'Notes, code and experiences for Introduction to Computer Systems course',
+        name: 'Sui Learning',
+        description: 'Sui的叙事和方案看上去很好，但是在Cetus事件中的行为有悖去中心化宗旨。',
         links: [
           {
-            type: 'github',
-            href: 'https://github.com/zhuozhiyongde/Introduction-To-Computer-System-2023Fall-PKU'
+            type: 'site',
+            href: 'https://sui.io/'
           }
+        ]
+      },
+      {
+        name: 'Bevy Learning',
+        description: 'Rust语言的游戏引擎，但是目前还有很大的成长空间',
+        links: [
+          {
+            type: 'site',
+            href: 'https://bevy.org/'
+          }
+        ]
+      },
+      {
+        name: 'Blender Learning',
+        description: '3D建模界的活菩萨，结合AI工具食用味道更好',
+        links: [
+          { type: 'site', href: 'https://blender.org/' },
+          { type: 'site', href: 'https://kurtwei.com/' }
         ]
       }
     ]}
   />
+  }
 
-  <h2 id='others'>Others</h2>
-  <ProjectSection
+
+  <h2 id='others'>其他 / Others</h2>
+  { /*
+     <ProjectSection
     projects={[
       {
         name: 'CWorld',
@@ -125,9 +160,12 @@ const headings = [
       }
     ]}
   />
+  */ }
+ 
 
   <!-- gpg signature -->
-  <!-- <h2 id='gpg-signature'>GPG Signature</h2>
+   {/* 
+  <h2 id='gpg-signature'>GPG Signature</h2>
   <p>
     You can verify the authenticity of the files I signed by checking the GPG signature. My GPG key
     is <code>114514</code>, and you can find it on the opengpg key servers or download from it.
@@ -135,18 +173,27 @@ const headings = [
   <Button href='https://keys.openpgp.org/search?q=114514' title='Checkout my key' target='_blank'>
     <KeyIcon class='size-5' slot='before' />
   </Button> -->
-
+*/}
   <!-- sponsorship -->
-  <!-- <h2 id='sponsorship'>Sponsorship</h2>
-  <p>Please leave a message or contact me proactively after sponsorship.</p>
+  <h2 id='sponsorship'>打赏 / Sponsorship</h2>
+  <p>若肯打赏，烦请留个名号~<br/>Please leave a message or contact me proactively after sponsorship.</p>
   <Sponsorship
     methods={[
       { name: 'WeChat', icon: 'wechat-pay', image: wechat },
       { name: 'Alipay', icon: 'alipay', image: alipay }
-    ]}
-  /> -->
-  
-  <!-- <p>Thanks to the following sponsors:</p>
+    ]}/>
+<div class="grid grid-cols-2 gap-2 mt-4">
+  <b>ETH(Ethereum链):</b>
+  <div class="justify-self-end"><CopyButton text={ETH_address} /></div>
+
+  <b>SOL(Solana链):</b>
+  <div class="justify-self-end"><CopyButton text={SOL_address} /></div>
+
+  <b>SUI(Sui链):</b>
+  <div class="justify-self-end"><CopyButton text={SUI_address} /></div>
+</div>
+<!--   
+  <p>Thanks to the following sponsors:</p>
   <Sponsors
     progressMax={25}
     sponsors={[
