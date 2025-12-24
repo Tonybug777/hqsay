@@ -111,18 +111,14 @@ export const integ: IntegrationUserConfig = {
   links: {
     // Friend logbook
     logbook: [
-      { date: '2025-03-16', content: 'Is there a leakage?' },
-      { date: '2025-03-16', content: 'A leakage of what?' },
-      { date: '2025-03-16', content: 'I have a full seat of water, like, full of water!' },
-      { date: '2025-03-16', content: 'Must be the water.' },
-      { date: '2025-03-16', content: "Let's add that to the words of wisdom." }
+      { date: '2025-12-24', content: 'Add CWorld Site and Arthals\' ink.' },
     ],
     // Yourself link info
     applyTip: [
       { name: 'Name', val: theme.title },
       { name: 'Desc', val: theme.description || 'Null' },
-      { name: 'Link', val: 'https://hqsay.com/' },
-      { name: 'Avatar', val: 'https://hqsay.com/avatar.jpg' }
+      { name: 'Link', val: 'https://www.hqsay.com/' },
+      { name: 'Avatar', val: 'https://www.hqsay.com/avatar.jpg' }
     ],
     // Cache avatars in `public/avatars/` to improve user experience.
     cacheAvatar: false
