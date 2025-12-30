@@ -78,14 +78,14 @@ export const theme: ThemeUserConfig = {
       // Privacy Policy link
       {
         title: 'Site Policy',
-        link: '/terms/list',
+        link: '/terms',
         pos: 2 // position set to 2 will be appended to copyright line
       }
     ],
     /** Enable displaying a “Astro & Pure theme powered” link in your site’s footer. */
     credits: true,
     /** Optional details about the social media accounts for this site. */
-    social: { github: 'https://github.com/Tonybug777/pure-theme', email: 'mailto:tonybug777@gmail.com' }
+    social: { github: 'https://github.com/Tonybug777/hqsay', email: 'mailto:tonybug777@gmail.com' }
   },
 
   // [Content]

@@ -18,7 +18,7 @@
           transformerNotationDiff,
           transformerNotationHighlight,
           transformerRemoveNotationEscape
-        } from './src/plugins/shiki-offical/transformers.ts'
+        } from './src/plugins/shiki-official/transformers.ts'
         import config from './src/site.config.ts'
         
         // https://astro.build/config

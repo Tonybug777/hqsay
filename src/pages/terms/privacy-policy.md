@@ -4,7 +4,7 @@ layout: '@/layouts/IndividualPage.astro'
 title: 'Privacy Policy'
 description: 'Effective date: 2025-12-08'
 language: 'En'
-back: '/terms/list'
+back: '/terms'
 ---
 
 ## 1. Introduction

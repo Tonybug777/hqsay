@@ -4,7 +4,7 @@ layout: '@/layouts/IndividualPage.astro'
 title: 'Disclaimer'
 description: 'Last updated: 2025-12-08'
 language: 'En'
-back: '/terms/list'
+back: '/terms'
 ---
 	 	 
 ### WEBSITE DISCLAIMER
