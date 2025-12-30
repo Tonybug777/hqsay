@@ -15,7 +15,7 @@ type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }> & {
 }
 
 const {
-  as: Tag = 'a',
+  as: Tag = Astro.props.href ? 'a' : 'div',
   class: className,
   href,
   heading,
@@ -32,8 +32,8 @@ const {
     'navi-card group overflow-hidden relative flex flex-col justify-end rounded-2xl border bg-muted decoration-none',
     href && 'transition-all hover:border-foreground/25 hover:shadow-sm'
   )}
-  href={href}
-  target='_blank'
+  {...(Tag === 'a' && { href })} 
+  target={Tag === 'a' ? '_blank' : undefined} 
 >
   <Image
     src={image}

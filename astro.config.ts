@@ -1,6 +1,4 @@
         import { rehypeHeadingIds } from '@astrojs/markdown-remark'
-        // import cloudflare from '@astrojs/cloudflare'
-        import cloudflare from '@astrojs/cloudflare';
         import AstroPureIntegration from 'astro-pure'
         import { defineConfig, fontProviders } from 'astro/config'
         import rehypeKatex from 'rehype-katex'
@@ -26,7 +24,7 @@
         // https://astro.build/config
         export default defineConfig({
           // [Basic]
-          site: 'https://www.hqsay.com',
+          site: 'https://hqsay.com',
           // Deploy to a sub path
           // https://astro-pure.js.org/docs/setup/deployment#platform-with-base-path
           // base: '/astro-pure/',
@@ -37,8 +35,8 @@
           // [Adapter]
           // https://docs.astro.build/en/guides/deploy/
           // 1. Vercel (serverless)
-          adapter: cloudflare(),
-          output: 'server',
+          // adapter: cloudflare(),
+          output: 'static',
           // 2. Vercel (static)
           // adapter: vercelStatic(),
           // 3. Local (standalone)

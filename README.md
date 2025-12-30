@@ -1,6 +1,6 @@
 # HanQiu Does
 
-A simple personal blog site[HanQiu Does](https://www.hqsay.com) based on [Astro Theme Pure](https://astro-pure.js.org/).
+A simple personal blog site [HanQiu Does](https://www.hqsay.com) based on [Astro Theme Pure](https://astro-pure.js.org/).
 
 ## License
 
