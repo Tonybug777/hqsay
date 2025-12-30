@@ -35,6 +35,12 @@ const walineConfig = config.integ.waline
   }
 </script>
 
+{
+  config.integ.waline.showMeta &&(
+    <style> #waline :global(.wl-meta) { display: none; } </style>
+  )
+}
+
 <style>
   /* Basic theme */
   #waline {
