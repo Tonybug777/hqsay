@@ -1,5 +1,4 @@
 ---
-// https://waline.js.org/en/guide/features/pageview.html#use-alone
 import config from '@/site-config'
 ---
 
@@ -7,14 +6,14 @@ import config from '@/site-config'
   is:inline
   type='module'
   data-astro-rerun
-  define:vars={{ npmCDN: config.npmCDN, walineServer: config.integ.waline.server }}
+  define:vars={{ walineServer: config.integ.waline.server }}
 >
   async function loadPageview() {
     try {
-      const pageview = await import(`${npmCDN}/@waline/client@v3/dist/pageview.js`)
+      // ✅ 从本地 public 加载
+      const pageview = await import('/waline-pageview.js')
       const el = document.querySelector('.waline-pageview-count')
       if (el) {
-        // 👇 关键：调用 pageviewCount 并返回它返回的 abort 函数
         return pageview.pageviewCount({
           serverURL: walineServer,
           path: window.location.pathname
@@ -23,11 +22,9 @@ import config from '@/site-config'
     } catch (e) {
       console.error('Failed to load Waline pageview:', e)
     }
-    // 如果没找到元素或出错，返回一个空的 noop 函数避免调用错误
     return () => {}
   }
 
   const abort = await loadPageview()
-  // After 500ms, if the network request has not been completed, cancel this operation
   setTimeout(() => abort(), 500)
 </script>

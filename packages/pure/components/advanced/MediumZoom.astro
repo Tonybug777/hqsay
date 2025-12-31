@@ -1,5 +1,5 @@
 ---
-// https://github.com/francoischalifour/medium-zoom
+// MediumZoom.astro
 import config from 'virtual:config'
 
 interface Props {
@@ -7,13 +7,36 @@ interface Props {
   background?: string
 }
 
-const { selector = config.integ.mediumZoom.selector, background = 'hsl(var(--background) / 0.8)' } =
-  Astro.props
+const { 
+  selector = config.integ.mediumZoom.selector, 
+  background = 'hsl(var(--background) / 0.8)' 
+} = Astro.props
 ---
 
-<script is:inline src={`${config.npmCDN}/medium-zoom/dist/pure/medium-zoom.min.umd.js`}></script>
-<script is:inline define:vars={{ selector, background }}>
-  mediumZoom(selector, { background })
+<div 
+  hidden 
+  data-medium-zoom-selector={selector}
+  data-medium-zoom-background={background}
+></div>
+
+<script>
+  import mediumZoom from 'medium-zoom'
+
+  document.addEventListener('astro:page-load', () => {
+    const el = document.querySelector('[data-medium-zoom-selector]')
+    if (!el) return
+
+    const sel = el.getAttribute('data-medium-zoom-selector')
+    const rawBg = el.getAttribute('data-medium-zoom-background')
+    // ✅ 将 null 转为 undefined，符合 medium-zoom 类型要求
+    const bg = rawBg || undefined
+
+    if (sel) {
+      // ✅ 只有需要时才传 background
+      const options = bg ? { background: bg } : {}
+      mediumZoom(sel, options)
+    }
+  })
 </script>
 <style is:global>
   .medium-zoom-overlay {
