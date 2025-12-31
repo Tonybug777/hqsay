@@ -1,17 +1,22 @@
 ---
 import config from '@/site-config'
+
 import '@waline/client/style'
+
 import { cn } from 'astro-pure/utils'
 
 const { class: className } = Astro.props
-const walineConfig = config.integ.waline
 ---
 
-{walineConfig.enable && (
-  <div id="waline" class={cn('not-prose', className)}>
-    Loading comments... ✨
-  </div>
-)}
+{
+  config.integ.waline.enable && (
+    <comment-component>
+      <div id='waline' class={cn('not-prose', className)}>
+        Loading Comments...✨
+      </div>
+    </comment-component>
+  )
+}
 
 <script>
   import { init as walineInit } from '@waline/client'
@@ -20,26 +25,36 @@ const walineConfig = config.integ.waline
 
   const walineConfig = config.integ.waline
 
-  if (walineConfig?.enable) {
-    const emoji = walineConfig.emoji?.map(
-      (preset) => `${config.npmCDN}/@waline/emojis@1.2.0/${preset}` as WalineEmojiPresets
-    )
+  class Comment extends HTMLElement {
+    constructor() {
+      super()
+    }
 
-    walineInit({
-      el: '#waline',
-      serverURL: walineConfig.server || '',
-      emoji,
-      reaction: ['/icons/heart-item.svg'],
-      ...walineConfig.additionalConfigs
-    })
+    connectedCallback() {
+      // Prevent Vue log errors
+      ;(globalThis as unknown as { __VUE_OPTIONS_API__: boolean }).__VUE_OPTIONS_API__ = true
+      ;(globalThis as unknown as { __VUE_PROD_DEVTOOLS__: boolean }).__VUE_PROD_DEVTOOLS__ = false
+      ;(
+        globalThis as unknown as { __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: boolean }
+      ).__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false
+
+      const emoji = walineConfig.emoji?.map(
+        // (preset) => `${config.npmCDN}/@waline/emojis@1.2.0/${preset}` as WalineEmojiPresets
+        (preset) => `/waline-emojis/${preset}` as WalineEmojiPresets
+      )
+
+      walineInit({
+        el: '#waline',
+        serverURL: walineConfig.server || '',
+        emoji,
+        reaction: ['/icons/heart-item.svg'],
+        ...walineConfig.additionalConfigs
+      })
+    }
   }
-</script>
 
-{
-  config.integ.waline.showMeta &&(
-    <style> #waline :global(.wl-meta) { display: none; } </style>
-  )
-}
+  if (walineConfig.enable) customElements.define('comment-component', Comment)
+</script>
 
 <style>
   /* Basic theme */
