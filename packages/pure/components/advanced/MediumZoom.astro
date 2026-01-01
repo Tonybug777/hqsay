@@ -1,43 +1,59 @@
 ---
 // MediumZoom.astro
-import config from 'virtual:config'
+import config from 'virtual:config';
 
 interface Props {
-  selector?: string
-  background?: string
+  selector?: string;
+  background?: string;
 }
 
 const { 
   selector = config.integ.mediumZoom.selector, 
   background = 'hsl(var(--background) / 0.8)' 
-} = Astro.props
+} = Astro.props;
+
+// 准备要传递给客户端的配置对象
+const clientConfig = {
+  selector,
+  background
+};
 ---
 
-<div 
-  hidden 
-  data-medium-zoom-selector={selector}
-  data-medium-zoom-background={background}
-></div>
+<!-- 将配置信息隐藏在HTML中，以便客户端脚本读取 -->
+<div id="medium-zoom-config" data-config={JSON.stringify(clientConfig)} hidden></div>
 
 <script>
-  import mediumZoom from 'medium-zoom'
+  import mediumZoom from 'medium-zoom';
 
-  document.addEventListener('astro:page-load', () => {
-    const el = document.querySelector('[data-medium-zoom-selector]')
-    if (!el) return
+  document.addEventListener('DOMContentLoaded', () => {
+    // 从隐藏的 div 中读取配置
+    const configElement = document.getElementById('medium-zoom-config');
+    if (!configElement) return;
 
-    const sel = el.getAttribute('data-medium-zoom-selector')
-    const rawBg = el.getAttribute('data-medium-zoom-background')
-    // ✅ 将 null 转为 undefined，符合 medium-zoom 类型要求
-    const bg = rawBg || undefined
+    const { selector, background } = JSON.parse(configElement.dataset.config || '{}');
 
-    if (sel) {
-      // ✅ 只有需要时才传 background
-      const options = bg ? { background: bg } : {}
-      mediumZoom(sel, options)
+    if (!selector) {
+      console.error('MediumZoom: Selector is required but not provided.');
+      return;
     }
-  })
+
+    // 查找要应用缩放的元素
+    const elements = document.querySelectorAll(selector);
+    if (elements.length === 0) {
+      console.warn(`MediumZoom: No elements found for selector "${selector}".`);
+      return;
+    }
+
+    // 将 null 转为 undefined，符合 medium-zoom 类型要求
+    const bg = background || undefined;
+    const options = bg ? { background: bg } : {};
+
+    // 对找到的元素初始化 medium-zoom
+    // 注意: medium-zoom 通常只需要调用一次，传入所有匹配的元素
+    mediumZoom(elements, options);
+  });
 </script>
+
 <style is:global>
   .medium-zoom-overlay {
     position: fixed;
